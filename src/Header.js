@@ -13,7 +13,7 @@ const headerStyle = {
   color: 'white',
   textAlign: 'center',
   padding: '10px',
-  fontFamily:"Arial"
+  fontFamily:"consolas"
 }
 
 export default Header;
