@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
+import CheckIcon from '@material-ui/icons/Check'
 class TodoItems extends Component {
   constructor(props) {
     super(props);
@@ -8,15 +9,33 @@ class TodoItems extends Component {
     this.createTasks = this.createTasks.bind(this)
   }
 
+  componentDidMount() {
+    this.setState({
+      items:this.props.items
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      items:nextProps.items
+    });
+  }
+
+
+  getStyle = (item) => {
+    return {textDecoration: item.completed? 'line-through':'none'};
+  }
 
   createTasks(item){
-    return (<li>
+    return (<li style={this.getStyle(item)}>
               {item.text}
               <span>
+                <CheckIcon onClick= {() => this.completed(item.key)}
+                                        key= {item.key}/>
                 <EditIcon onClick= {() => this.rename(item.key)}
-                            key={item.key}/>
+                            key={item.key+1}/>
                 <DeleteIcon onClick= {() => this.delete(item.key)}
-                            key={item.key} />
+                            key={item.key+2} />
               </span>
             </li>
 
@@ -31,6 +50,9 @@ class TodoItems extends Component {
     this.props.edit(key);
   }
 
+  completed(key) {
+    this.props.completed(key);
+  }
 
   render() {
     var todoEntries = this.props.entries;

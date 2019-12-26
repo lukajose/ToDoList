@@ -10,13 +10,17 @@ class TodoList extends Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.renameItem = this.renameItem.bind(this);
     this.searchItem = this.searchItem.bind(this);
+    this.markCompleted = this.markCompleted.bind(this);
   }
   addItem(e) {
     //if item is not empty string create new item object and add
     if (this._inputElement !== "") {
+      console.log('new item')
+
       var item = {
         text: this._inputElement.value,
-        key:Date.now() // get the time now as id
+        key:Date.now(), // get the time now as id
+        completed: false
       };
 
       this.setState((prevState)=> {
@@ -48,24 +52,39 @@ class TodoList extends Component {
       items:items
     })
   }
-  searchItem(e) {
-    e.preventDefault()
-    if(this._search.value !== ""){
-      var filteredItems = this.state.items.filter(function(item) {
-        return (item.text.search(this._search.value))
-      });
-      this._search = ""
 
-      return (<TodoItems entries={filteredItems}
-                 delete={this.deleteItem}
-                 edit={this.renameItem} />);
-    } else {
-      return (<TodoItems entries={this.state.items}
-                 delete={this.deleteItem}
-                 edit={this.renameItem}/>)
-    }
-
+  markCompleted(key) {
+    const items = this.state.items;
+    items.map(item => {
+      if(item.key === key) {
+        item.completed = !item.completed;
+      }
+    })
+    this.setState({
+      items:items
+    })
   }
+  searchItem(e) {
+    let currentL = []; // current list hold original version
+    let newL = []; // new list holds filtered version
+    if(e.target.value !== ""){
+      currentL = this.props.items; // hold list
+      function check_search(item) {
+        const str_check = item.text.toLowerCase();
+        return (str_check.includes(e.target.value));
+      }
+      newL = currentL.filter(check_search)
+      console.log(newL,'this are the elements')
+    } else {
+      newL = this.props.items;
+    }
+    this.setState({
+      items:newL
+    })
+  }
+
+
+
 
   render() {
     return (<div className= "todoListMain">
@@ -78,16 +97,14 @@ class TodoList extends Component {
                   </input>
                   <button type="submit"> add</button>
                 </form>
-                <form onSubmit={this.searchItem}>
-                  <input ref= {(b) => this._search =b} placeholder="task to search ..">
+                  <input placeholder="task to search .." onChange={this.searchItem}>
                   </input>
                   <button type="submit"> search </button>
-                </form>
-
             </div>
             <TodoItems entries={this.state.items}
                        delete={this.deleteItem}
-                       edit={this.renameItem} />
+                       edit={this.renameItem}
+                       completed= {this.markCompleted}/>
           </div>
 
 
