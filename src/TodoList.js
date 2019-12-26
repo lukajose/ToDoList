@@ -1,6 +1,9 @@
 import React, {Component} from "react";
 import TodoItems from './TodoItems';
 import "./TodoList.css";
+import SearchIcon from '@material-ui/icons/Search';
+import { fontSize } from "@material-ui/system";
+
 class TodoList extends Component {
   constructor(props) {
     super(props);
@@ -12,6 +15,9 @@ class TodoList extends Component {
     this.searchItem = this.searchItem.bind(this);
     this.markCompleted = this.markCompleted.bind(this);
   }
+
+
+
   addItem(e) {
     //if item is not empty string create new item object and add
     if (this._inputElement !== "") {
@@ -68,15 +74,18 @@ class TodoList extends Component {
     let currentL = []; // current list hold original version
     let newL = []; // new list holds filtered version
     if(e.target.value !== ""){
-      currentL = this.props.items; // hold list
+      console.log('Print wohoo at least it gets here')
+      currentL = this.state.items; // hold list
+      console.log(currentL)
       function check_search(item) {
         const str_check = item.text.toLowerCase();
+        console.log(str_check)
         return (str_check.includes(e.target.value));
       }
       newL = currentL.filter(check_search)
       console.log(newL,'this are the elements')
     } else {
-      newL = this.props.items;
+      newL = this.state.items;
     }
     this.setState({
       items:newL
@@ -99,7 +108,7 @@ class TodoList extends Component {
                 </form>
                   <input placeholder="task to search .." onChange={this.searchItem}>
                   </input>
-                  <button type="submit"> search </button>
+                  <button type="submit"> <SearchIcon style={{fontSize:15}} /></button>
             </div>
             <TodoItems entries={this.state.items}
                        delete={this.deleteItem}
