@@ -64,7 +64,7 @@ class TodoList extends Component {
     const items = this.state.items;
     items.map(item => {
       if (item.key===key){
-        item.text=message;
+        return item.text=message;
       }
     })
     this.setState({
@@ -76,7 +76,7 @@ class TodoList extends Component {
     const items = this.state.items;
     items.map(item => {
       if(item.key === key) {
-        item.completed = !item.completed;
+        return item.completed = !item.completed;
       }
     })
     this.setState({
