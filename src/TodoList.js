@@ -16,46 +16,50 @@ class TodoList extends Component {
     this.markCompleted = this.markCompleted.bind(this);
   }
 
-  componentDidMount() {
-    this.setState({
-      items:this.state.items
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      items:nextProps.items
-    });
-  }
+  
 
   addItem(e) {
-    //if item is not empty string create new item object and add
+    //if new item then add to items list
     if (this._inputElement !== "") {
-      console.log('new item')
-
       var item = {
-        text: this._inputElement.value,
+        text: this._inputElement.value, // text to store from input box
         key:Date.now(), // get the time now as id
-        completed: false
+        completed: false // to format style later when task completed
       };
+      var newS = this.state.search;
+      if(!this.isSearchEmpty(this.state.search)) {
+        newS = newS.concat(item) // include to update state when searching
+      }
 
       this.setState((prevState)=> {
         {/*get the last previous state add new item and return*/}
-        return  {items:prevState.items.concat(item)};
+        return  {items:prevState.items.concat(item),search:newS};
       });
       //finally set the string to empty
       this._inputElement.value = ""
-      e.preventDefault();
+      e.preventDefault(); // avoid default option
+      
     }
   }
+  //filters items and returns everything except the item with that key
   deleteItem(key) {
-    var filteredItems = this.state.items.filter(function(item) {
-      return (item.key !== key)
-    });
+    //filter condition
+    function delete_filter(item) {
+      return (item.key !== key);
+    }
+    const filteredItems = this.state.items.filter(delete_filter);
+    var newS = this.state.search;
+    if(!this.isSearchEmpty(this.state.search)) {
+      newS = this.state.search.filter(delete_filter) // include to update state when searching
+    }
+    
     this.setState({
-      items:filteredItems
+      items:filteredItems,
+      search:newS
     })
+    console.log('updates search state:',this.state.items)
   }
+  // when click prompt will ask for new message and rename that item
   renameItem(key) {
     var message = prompt("Rename to do task");
     const items = this.state.items;
@@ -68,7 +72,7 @@ class TodoList extends Component {
       items:items
     })
   }
-
+  //gets the key and marks the task as completed will change the style when boolean is true
   markCompleted(key) {
     const items = this.state.items;
     items.map(item => {
@@ -109,7 +113,7 @@ class TodoList extends Component {
       } else {
         newL = this.state.items;
       }
-      
+      currentL = []
     }
     this.setState({
       items:newL,

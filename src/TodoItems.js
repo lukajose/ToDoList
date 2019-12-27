@@ -9,7 +9,7 @@ class TodoItems extends Component {
     this.createTasks = this.createTasks.bind(this)
   }
 
-
+  
 
   getStyle = (item) => {
     return {textDecoration: item.completed? 'line-through':'none'};
