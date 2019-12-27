@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import TodoItems from './TodoItems';
 import "./TodoList.css";
 import SearchIcon from '@material-ui/icons/Search';
-import { fontSize } from "@material-ui/system";
+
 
 class TodoList extends Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class TodoList extends Component {
       }
 
       this.setState((prevState)=> {
-        {/*get the last previous state add new item and return*/}
+        {/*get the last previous state add new item, update search item if needed*/}
         return  {items:prevState.items.concat(item),search:newS};
       });
       //finally set the string to empty
@@ -57,7 +57,6 @@ class TodoList extends Component {
       items:filteredItems,
       search:newS
     })
-    console.log('updates search state:',this.state.items)
   }
   // when click prompt will ask for new message and rename that item
   renameItem(key) {
@@ -104,20 +103,15 @@ class TodoList extends Component {
       //apply filter
 
       newL = currentL.filter(check_search);
-      console.log('newL',newL,'currentL',currentL)
     } else {
-      //we want to display original list if search is empty
+      //we want to display original list if search is empty if not then search result
       let searchA = this.state.search;
-      if(Array.isArray(searchA) && searchA.length) {
-        newL = this.state.search;
-      } else {
-        newL = this.state.items;
-      }
+      (Array.isArray(searchA) && searchA.length)? newL = this.state.search : newL = this.state.items; // condition to check what to update
       currentL = []
     }
     this.setState({
       items:newL,
-      search:currentL
+      search:currentL // update the state
     })
   }
 
