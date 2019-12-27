@@ -9,17 +9,6 @@ class TodoItems extends Component {
     this.createTasks = this.createTasks.bind(this)
   }
 
-  componentDidMount() {
-    this.setState({
-      items:this.props.items
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      items:nextProps.items
-    });
-  }
 
 
   getStyle = (item) => {

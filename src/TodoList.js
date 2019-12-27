@@ -8,7 +8,7 @@ class TodoList extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {items:[]}
+    this.state = {items:[], search:[]}
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.renameItem = this.renameItem.bind(this);
@@ -16,7 +16,17 @@ class TodoList extends Component {
     this.markCompleted = this.markCompleted.bind(this);
   }
 
+  componentDidMount() {
+    this.setState({
+      items:this.state.items
+    });
+  }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      items:nextProps.items
+    });
+  }
 
   addItem(e) {
     //if item is not empty string create new item object and add
@@ -70,25 +80,40 @@ class TodoList extends Component {
       items:items
     })
   }
-  searchItem(e) {
-    let currentL = []; // current list hold original version
+
+  isSearchEmpty(Ar) {
+    return (Array.isArray(Ar) && Ar.length)? false : true;
+  }
+  searchItem(e) { 
+    // current list hold original version
     let newL = []; // new list holds filtered version
-    if(e.target.value !== ""){
-      console.log('Print wohoo at least it gets here')
-      currentL = this.state.items; // hold list
-      console.log(currentL)
+    let currentL = this.state.search;
+    if(e.target.value !== "") {
+      if(this.isSearchEmpty(this.state.search)) {
+        currentL = this.state.items; //save initial state
+      }
+      //Search filter based on input
       function check_search(item) {
         const str_check = item.text.toLowerCase();
-        console.log(str_check)
         return (str_check.includes(e.target.value));
       }
-      newL = currentL.filter(check_search)
-      console.log(newL,'this are the elements')
+      //apply filter
+
+      newL = currentL.filter(check_search);
+      console.log('newL',newL,'currentL',currentL)
     } else {
-      newL = this.state.items;
+      //we want to display original list if search is empty
+      let searchA = this.state.search;
+      if(Array.isArray(searchA) && searchA.length) {
+        newL = this.state.search;
+      } else {
+        newL = this.state.items;
+      }
+      
     }
     this.setState({
-      items:newL
+      items:newL,
+      search:currentL
     })
   }
 
