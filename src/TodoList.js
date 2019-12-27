@@ -122,16 +122,17 @@ class TodoList extends Component {
     return (<div className= "todoListMain">
               <div className="header">
                 <form onSubmit={this.addItem}>
-                  {/*when adding let the _inputElement method be the input*/}
                   <input
                     ref={ (a) => this._inputElement = a }
                     placeholder="enter to do ...">
+                  
                   </input>
                   <button type="submit"> add</button>
+                  
                 </form>
                   <input placeholder="task to search .." onChange={this.searchItem}>
                   </input>
-                  <button type="submit"> <SearchIcon style={{fontSize:15}} /></button>
+                  
             </div>
             <TodoItems entries={this.state.items}
                        delete={this.deleteItem}

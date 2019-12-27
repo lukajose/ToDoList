@@ -1,15 +1,18 @@
 import React from 'react';
 function Header() {
   return (
-    
-    <header style= {headerStyle}>
+    <div className="header">
+      <header style= {headerStyle}>
       <h1> To Do List App </h1>
-    </header>
+      </header>
+    </div>
   )
 }
 
 const headerStyle = {
-  background: '#3CB371',
+  alignItems: "center",
+  overflow:"hidden",
+  background: '#00FA9A',
   color: 'white',
   textAlign: 'center',
   padding: '10px',
