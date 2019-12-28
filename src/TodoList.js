@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import TodoItems from './TodoItems';
 import "./TodoList.css";
-import SearchIcon from '@material-ui/icons/Search';
+import AddIcon from '@material-ui/icons/Add';
 
 
 class TodoList extends Component {
@@ -21,20 +21,29 @@ class TodoList extends Component {
   addItem(e) {
     //if new item then add to items list
     if (this._inputElement !== "") {
+      //new element to add
       var item = {
         text: this._inputElement.value, // text to store from input box
         key:Date.now(), // get the time now as id
         completed: false // to format style later when task completed
       };
-      var newS = this.state.search;
-      if(!this.isSearchEmpty(this.state.search)) {
-        newS = newS.concat(item) // include to update state when searching
+
+      
+      if(item.text !== "") { // avoid empty tasks
+        
+        //Update Search state
+        var newS = this.state.search; // check if search is NOT empty to update state
+        if(!this.isSearchEmpty(this.state.search)) {
+          newS = newS.concat(item) // include to update state when searching
+        }
+        
+        //Add element to both initial list and search state
+        this.setState((prevState)=> {
+          {/*get the last previous state add new item, update search item if needed*/}
+          return  {items:prevState.items.concat(item),search:newS};
+        });
       }
 
-      this.setState((prevState)=> {
-        {/*get the last previous state add new item, update search item if needed*/}
-        return  {items:prevState.items.concat(item),search:newS};
-      });
       //finally set the string to empty
       this._inputElement.value = ""
       e.preventDefault(); // avoid default option
@@ -127,7 +136,7 @@ class TodoList extends Component {
                     placeholder="enter to do ...">
                   
                   </input>
-                  <button type="submit"> add</button>
+                  <button type="submit"> Add </button>
                   
                 </form>
                   <input placeholder="task to search .." onChange={this.searchItem}>
@@ -139,8 +148,6 @@ class TodoList extends Component {
                        edit={this.renameItem}
                        completed= {this.markCompleted}/>
           </div>
-
-
 
 
 

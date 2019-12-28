@@ -5,7 +5,6 @@ import CheckIcon from '@material-ui/icons/Check'
 class TodoItems extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.entries)
     this.createTasks = this.createTasks.bind(this)
   }
 

@@ -12,7 +12,7 @@ function Header() {
 const headerStyle = {
   alignItems: "center",
   overflow:"hidden",
-  background: '#00FA9A',
+  background: 'rgb(3, 219, 136)',
   color: 'white',
   textAlign: 'center',
   padding: '10px',
