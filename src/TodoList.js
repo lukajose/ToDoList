@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import TodoItems from './TodoItems';
 import "./TodoList.css";
 import AddIcon from '@material-ui/icons/Add';
+import Timer from './Timer.js';
 
 
 class TodoList extends Component {
@@ -129,7 +130,8 @@ class TodoList extends Component {
 
   render() {
     return (<div className= "todoListMain">
-              <div className="header">
+              <Timer/>
+              <div className="input-box-todo">
                 <form onSubmit={this.addItem}>
                   <input
                     ref={ (a) => this._inputElement = a }
@@ -137,11 +139,10 @@ class TodoList extends Component {
                   
                   </input>
                   <button type="submit"> Add </button>
-                  
                 </form>
-                  <input placeholder="task to search .." onChange={this.searchItem}>
-                  </input>
-                  
+            </div>
+            <div className = 'input-box-search'>
+              <input placeholder="task to search .." onChange={this.searchItem}></input>
             </div>
             <TodoItems entries={this.state.items}
                        delete={this.deleteItem}

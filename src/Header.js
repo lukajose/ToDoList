@@ -3,7 +3,7 @@ function Header() {
   return (
     <div className="header">
       <header style= {headerStyle}>
-      <h1> To Do List App </h1>
+      <h1> Productivity App </h1>
       </header>
     </div>
   )
