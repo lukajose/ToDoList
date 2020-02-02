@@ -8,22 +8,27 @@ class TodoList extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {items:[], search:[]}
+    this.state = {items:[], search:[],startTimer:false}
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.renameItem = this.renameItem.bind(this);
     this.searchItem = this.searchItem.bind(this);
     this.markCompleted = this.markCompleted.bind(this);
     this.changeTimer = this.changeTimer.bind(this);
-    this.startTimer = false;
+    //this.startTimer = false;
   }
 
+  changeTimer() {
+    this.setState({startTimer:!this.state.startTimer}); 
+    //this.startTimer = !this.startTimer;
+    console.log('timer is now: ',this.state.startTimer);
+  }
   
 
   addItem(e) {
     //if new item then add to items list
     if (this._inputElement !== "") {
-      this.startTimer = !this.startTimer;
+      this.changeTimer();
       //new element to add
       var item = {
         text: this._inputElement.value, // text to store from input box
@@ -129,10 +134,7 @@ class TodoList extends Component {
 
 
 
-  changeTimer() {
-    this.startTimer = !this.startTimer;
-    console.log('Changing state!');
-  }
+  
 
 
 
@@ -140,7 +142,7 @@ class TodoList extends Component {
 
   render() {
     return (<div className= "todoListMain">
-              <Timer starter = {this.startTimer}
+              <Timer starter = {this.state.startTimer}
                       changeTimer = {this.changeTimer}/>
               <div className="input-box-todo">
                 <form onSubmit={this.addItem}>

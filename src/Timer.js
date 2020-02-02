@@ -18,22 +18,28 @@ class Timer extends Component {
 
     //Given any input from the input boxes transform seconds to minutes and minutes to hours
     transformTime() {
-        console.log(this.state.seconds > 60);
-        while (this.state.seconds > 60 || this.state.minutes > 60) {
-            if (this.state.seconds > 60) {
-                this.state.seconds -= 60
+        let {hours, minutes,seconds} = this.state;
+        while (seconds > 60 || minutes > 60) {
+            if (seconds > 60) {
+                seconds -= 60
                 // Convert string to int to calculate proper conversion
-                this.state.minutes = parseInt(this.state.minutes) + 1
+                minutes = parseInt(minutes) + 1
             }
-            if (this.state.minutes > 60) {
-                this.state.minutes -= 60
+            if (minutes > 60) {
+                minutes -= 60
                 // same as above
-                this.state.hours = parseInt(this.state.hours) + 1
+                hours = parseInt(this.state.hours) + 1
             }
         }
+        this.setState({
+                    hours:hours,
+                    minutes:minutes,
+                    seconds:seconds
+                });
     }
 
-    componentDidMount() {
+    componentDidUpdate(prevProps) {
+
         this.myInterval = setInterval(() => {
             const { hours,minutes, seconds } = this.state;
 
@@ -46,7 +52,7 @@ class Timer extends Component {
             // check if minutes still need to decrement
             else if (seconds === 0) {
                 if (minutes === 0) {
-                    if(hours == 0) {
+                    if(hours === 0) {
                         clearInterval(this.myInterval);
                     } else {
                         this.setState(({hours}) => ({
@@ -72,6 +78,7 @@ class Timer extends Component {
 
 
     checkTimer() {
+        console.log('check timer: ',this.props.starter);
         return this.props.starter;
     }
 
@@ -94,23 +101,20 @@ class Timer extends Component {
 
     changeTimer() {
 
-        setTimeout(console.log('propschangertimer: ',this.props.changeTimer()),5000);
+        setTimeout(this.props.changeTimer(),10000);
     }
 
     timeFormat(time) {
-        if(time < 10) {
+        if(time < 10 && time > 0) {
             time = '0' + time;
         }
         return time;
     }
     
     render () {
-        // Update time if any new input was provided
-        this.updateTime();
-        //Convert seconds to minutes and minutes to hours if needed;
-        this.transformTime();
+        
         // if TodoList indicates not to start keep displaying the edit timer.
-        if (!this.checkTimer()) {
+        if (this.checkTimer() === false) {
             return (
                 <div className="timer-editor">
                     <table>
