@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import TodoItems from './TodoItems';
 import "./TodoList.css";
-import AddIcon from '@material-ui/icons/Add';
 import Timer from './Timer.js';
 
 
@@ -15,6 +14,8 @@ class TodoList extends Component {
     this.renameItem = this.renameItem.bind(this);
     this.searchItem = this.searchItem.bind(this);
     this.markCompleted = this.markCompleted.bind(this);
+    this.changeTimer = this.changeTimer.bind(this);
+    this.startTimer = false;
   }
 
   
@@ -22,6 +23,7 @@ class TodoList extends Component {
   addItem(e) {
     //if new item then add to items list
     if (this._inputElement !== "") {
+      this.startTimer = !this.startTimer;
       //new element to add
       var item = {
         text: this._inputElement.value, // text to store from input box
@@ -127,10 +129,19 @@ class TodoList extends Component {
 
 
 
+  changeTimer() {
+    this.startTimer = !this.startTimer;
+    console.log('Changing state!');
+  }
+
+
+
+
 
   render() {
     return (<div className= "todoListMain">
-              <Timer/>
+              <Timer starter = {this.startTimer}
+                      changeTimer = {this.changeTimer}/>
               <div className="input-box-todo">
                 <form onSubmit={this.addItem}>
                   <input

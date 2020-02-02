@@ -25,6 +25,9 @@ class TodoItems extends Component {
                 <DeleteIcon onClick= {() => this.delete(item.key)}
                             key={item.key+2} />
               </span>
+              <div>
+                  <img className= "Tomatoe" src="logo512.png" width="20" height="20" key= {item.key+5} alt=''></img>
+              </div>
             </li>
 
           )
