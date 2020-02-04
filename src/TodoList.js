@@ -28,6 +28,7 @@ class TodoList extends Component {
   addItem(e) {
     //if new item then add to items list
     if (this._inputElement !== "") {
+      // Start timer
       this.changeTimer();
       //new element to add
       var item = {
@@ -46,10 +47,10 @@ class TodoList extends Component {
         }
         
         //Add element to both initial list and search state
-        this.setState((prevState)=> {
-          {/*get the last previous state add new item, update search item if needed*/}
-          return  {items:prevState.items.concat(item),search:newS};
-        });
+        this.setState((prevState)=> ({
+          //get the last previous state add new item, update search item if needed
+          items:prevState.items.concat(item),search:newS
+        }));
       }
 
       //finally set the string to empty
@@ -91,11 +92,13 @@ class TodoList extends Component {
   //gets the key and marks the task as completed will change the style when boolean is true
   markCompleted(key) {
     const items = this.state.items;
-    items.map(item => {
+
+    function findKey(item){
       if(item.key === key) {
         item.completed = !item.completed;
       }
-    })
+    }
+    items.map(findKey);
     this.setState({
       items:items
     })
@@ -132,18 +135,10 @@ class TodoList extends Component {
     })
   }
 
-
-
-  
-
-
-
-
-
   render() {
     return (<div className= "todoListMain">
               <Timer starter = {this.state.startTimer}
-                      changeTimer = {this.changeTimer}/>
+                      changeTimer = {()=>this.changeTimer()}/>
               <div className="input-box-todo">
                 <form onSubmit={this.addItem}>
                   <input
