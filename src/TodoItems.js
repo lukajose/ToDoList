@@ -5,7 +5,6 @@ import CheckIcon from '@material-ui/icons/Check'
 class TodoItems extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.entries)
     this.createTasks = this.createTasks.bind(this)
   }
 
@@ -15,6 +14,13 @@ class TodoItems extends Component {
     return {textDecoration: item.completed? 'line-through':'none'};
   }
 
+
+
+
+  /* Item <div>
+                 <img className= "Tomatoe" src="logo512.png" width="20" height="20" key= {item.key+5} alt=''></img> 
+              </div>
+  */
   createTasks(item){
     return (<li style={this.getStyle(item)}>
               {item.text}

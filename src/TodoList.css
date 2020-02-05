@@ -1,48 +1,83 @@
 
-
-.todoListMain .header input {
-  padding: 10px;
-  font-size: 16px;
-  width: 780px;
-  border: #FFF;
-  background-color: #F0F0F0;
+* {
+  margin:0;
+  padding:0;
 }
 
 
 
-
-.todoListMain .header button {
-  padding:10px;
+.todoListMain .input-box-todo input {
+  padding: 15px;
   font-size: 16px;
-  margin: 5px;
-  margin-right: 0px;
-  background-color: #3CB371;
+  border: #FFF;
+  background-color: #FFF;
+  margin: 0 auto;
+  width: 300px;
+  border-bottom-color: #00FA9A;
+  border-bottom-style: solid;
+  position: relative;
+}
+
+/*margin-left:400px; */
+
+.todoListMain .input-box-search input {
+  padding: 15px;
+  font-size: 16px;
+  border: #FFF;
+  background-color: #FFF;
+  margin: 0 auto;
+  width: 300px;
+  border-bottom-color: #00FA9A;
+  border-bottom-style: solid;
+}
+
+ 
+.todoListMain .input-box-todo button {
+  display: inline-block;
+  padding:15px;
+  font-size: 16px;
+  background-color: rgb(3, 219, 136);
   color: #FFF;
-  border: 2px solid #3CB371;
-  width: 110px;
+  border: 2px solid rgb(3, 219, 136);
+  display:inline-block;
+  margin: 10px 0;
+  width: auto;
   font-family: consolas;
 }
-
-.todoListMain .header button:hover {
+/*
+padding:15px;
+  font-size: 16px;
+  background-color: rgb(3, 219, 136);
+  color: #FFF;
+  border: 2px solid rgb(3, 219, 136);
+  display:inline-block;
+  margin: 10px 0;
+  width: auto;
+  font-family: consolas;
+  font: size 10;
+  */
+.todoListMain .input-box-todo button:hover {
   background-color: #32CD32;
   border: 2px solid #32CD32;
-
   cursor: pointer;
-
 }
 
 
 .todoListMain .theList li {
   color: #333;
   background-color: rgba(255, 255, 255, 0.5);
-  padding: 15px;
-  margin-bottom: 15px;
+  padding: 20px;
   border-radius: 5px;
-  width: 890px;
-  position: relative;
+  width: 300px;
   font-family: consolas;
+  border-left: 6px solid #00FA9A;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 
 }
+
+/*margin-left: 400px; */
 
 .todoListMain .theList li:hover {
   background-color: #00FA9A;
@@ -57,4 +92,11 @@
 
 ul.theList {
   padding: 0;
+  list-style: none;
+  float:left;
+}
+
+.todoListMain .BarChart {
+  margin-left: 40%;
+  margin-right:20%;
 }
