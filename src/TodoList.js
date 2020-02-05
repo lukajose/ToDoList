@@ -156,6 +156,37 @@ class TodoList extends Component {
     const items = this.state.items;
     items.map(AddHours);
     this.setState({items:items});
+    console.log('items: ',items);
+
+  }
+
+  getCharData() {
+    //get list of items
+    const items = this.state.items;
+    console.log('items:',items,items.length);
+    let labels,data;
+    
+    if(items.length > 0) {
+      labels = new Array(items.length);
+      data = new Array(items.length);
+      for(let i = 0; i < items.length; i++) {
+        labels[i] = items[i].text;
+        data[i] = items[i].hours; 
+      } 
+      
+    } else {
+        labels = new Array('Add Task to Start displaying your hours!');
+        data = [0];
+      }
+    
+    var ChartData = {
+      labels:labels,
+      data:data,
+    }
+
+    return ChartData;
+    
+
   }
 
   render() {
@@ -163,8 +194,9 @@ class TodoList extends Component {
               <Timer starter = {this.state.startTimer}
                       changeTimer = {()=>this.changeTimer()}
                       currentKey={this.state.currentKey}
-                      addHours={(hours,key)=>this.addHours(hours,key)}
-                      currentKey={this.state.currentKey}
+                      addHours={(hours,key)=>this.AddTaskHours(hours,key)}
+                      current={this.state.currentKey}
+
               />
               <div className="input-box-todo">
                 <form onSubmit={this.addItem}>
@@ -180,7 +212,9 @@ class TodoList extends Component {
             <div className = 'input-box-search'>
               <input placeholder="task to search .." onChange={this.searchItem}></input>
             </div>
-            <Chart/>
+            <Chart ChartData = {this.getCharData()}
+                  AllData = {this.state.items}
+            />
             <TodoItems entries={this.state.items}
                        delete={this.deleteItem}
                        edit={this.renameItem}

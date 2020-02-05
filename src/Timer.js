@@ -51,10 +51,12 @@ class Timer extends Component {
     }
 
     getHours(hours,minutes,seconds) {
+        console.log('Starth:',hours,'min:',minutes,'sec:',seconds);
         const Hminutes = minutes/60;
         const Hseconds = (seconds/60)/60;
         hours += Hminutes + Hseconds;
         // get all minutes and seconds in hours
+        console.log('h:',hours,'min:',minutes,'sec:',seconds);
         return hours;
     }
 
@@ -64,16 +66,19 @@ class Timer extends Component {
 
     componentDidUpdate(prevProps) {
 
-        
+        // if change in state and timer is activated start coundown
         if((prevProps.starter !== this.props.starter) && (this.checkTimer() === true)) {
             const { hours,minutes, seconds } = this.state;
-            this.setState({TotalHours:this.getHours(hours,minutes,seconds)})
+            // Store total hours completed before starting countdown
+            const TotalHours = this.getHours(hours,minutes,seconds);
+            console.log(TotalHours);
+            this.setState({TotalHours:TotalHours});
             this.myInterval = setInterval(
                 () => {
                 const { hours,minutes, seconds } = this.state;
                 //console.log('sec:',seconds,'minutes:',minutes,'hours:',hours);
                 // if seconds are greater than 0 keep decrementing
-                if (seconds > 0) {
+                if (seconds > 0) { 
                     this.setState(({ seconds }) => ({
                         // keep decrementing seconds until seconds is 0.
                         seconds: seconds - 1
@@ -89,6 +94,8 @@ class Timer extends Component {
                                 minutes:0,
                                 seconds:0,
                             });
+                            //update hours in item
+                            this.props.addHours(this.state.TotalHours,this.props.current);
                             // return the time back to edit mode. (change the boolean in parent node).
                             this.changeTimer();
                             

@@ -14,6 +14,13 @@ class TodoItems extends Component {
     return {textDecoration: item.completed? 'line-through':'none'};
   }
 
+
+
+
+  /* Item <div>
+                 <img className= "Tomatoe" src="logo512.png" width="20" height="20" key= {item.key+5} alt=''></img> 
+              </div>
+  */
   createTasks(item){
     return (<li style={this.getStyle(item)}>
               {item.text}
@@ -25,9 +32,6 @@ class TodoItems extends Component {
                 <DeleteIcon onClick= {() => this.delete(item.key)}
                             key={item.key+2} />
               </span>
-              <div>
-                  <img className= "Tomatoe" src="logo512.png" width="20" height="20" key= {item.key+5} alt=''></img>
-              </div>
             </li>
 
           )
