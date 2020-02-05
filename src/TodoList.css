@@ -6,7 +6,6 @@
 
 
 
-
 .todoListMain .input-box-todo input {
   padding: 15px;
   font-size: 16px;
@@ -44,7 +43,6 @@
   margin: 10px 0;
   width: auto;
   font-family: consolas;
-  font: size 10;
 }
 /*
 padding:15px;
@@ -96,4 +94,9 @@ padding:15px;
 ul.theList {
   padding: 0;
   list-style: none;
+}
+
+.todoListMain .BarChart {
+  margin-left: 40%;
+  margin-right:20%;
 }

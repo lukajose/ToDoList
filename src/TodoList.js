@@ -2,13 +2,14 @@ import React, {Component} from "react";
 import TodoItems from './TodoItems';
 import "./TodoList.css";
 import Timer from './Timer.js';
+import Chart from './components/chart';
 
 
 class TodoList extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {items:[], search:[],startTimer:false}
+    this.state = {items:[], search:[],startTimer:false,taskId:1,currentKey:0}
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.renameItem = this.renameItem.bind(this);
@@ -29,12 +30,15 @@ class TodoList extends Component {
     //if new item then add to items list
     if (this._inputElement !== "") {
       // Start timer
-      this.changeTimer();
       //new element to add
+      let taskId = this.state.taskId;
+      const key = Date.now();
       var item = {
         text: this._inputElement.value, // text to store from input box
-        key:Date.now(), // get the time now as id
-        completed: false // to format style later when task completed
+        key: key, // get the time now as id
+        completed: false, // to format style later when task completed
+        hours:0, // hours spent on this task
+        TaskId:('T'+ taskId), // To format the bars instead of displaying the whole description
       };
 
       
@@ -49,8 +53,13 @@ class TodoList extends Component {
         //Add element to both initial list and search state
         this.setState((prevState)=> ({
           //get the last previous state add new item, update search item if needed
-          items:prevState.items.concat(item),search:newS
+          items:prevState.items.concat(item),
+          search:newS,
+          taskId: taskId+= 1,
+          currentKey:key,
         }));
+        // Also update timer to start when added
+        this.changeTimer();
       }
 
       //finally set the string to empty
@@ -79,12 +88,14 @@ class TodoList extends Component {
   // when click prompt will ask for new message and rename that item
   renameItem(key) {
     var message = prompt("Rename to do task");
-    const items = this.state.items;
-    items.map(item => {
+    // if key is equal to what we look for rename the task with new message.
+    function Rename(item) {
       if (item.key===key){
         item.text=message;
       }
-    })
+    }
+    const items = this.state.items;
+    items.map(Rename);
     this.setState({
       items:items
     })
@@ -135,29 +146,44 @@ class TodoList extends Component {
     })
   }
 
+  AddTaskHours(hours,key) {
+    // Find key, then add hours
+    function AddHours(item) {
+      if (item.key===key) {
+        item.hours += hours
+      }
+    }
+    const items = this.state.items;
+    items.map(AddHours);
+    this.setState({items:items});
+  }
+
   render() {
     return (<div className= "todoListMain">
               <Timer starter = {this.state.startTimer}
-                      changeTimer = {()=>this.changeTimer()}/>
+                      changeTimer = {()=>this.changeTimer()}
+                      currentKey={this.state.currentKey}/>
               <div className="input-box-todo">
                 <form onSubmit={this.addItem}>
                   <input
                     ref={ (a) => this._inputElement = a }
                     placeholder="enter to do ...">
-                  
+                      
                   </input>
+                  
                   <button type="submit"> Add </button>
-                </form>
+                </form>               
             </div>
             <div className = 'input-box-search'>
               <input placeholder="task to search .." onChange={this.searchItem}></input>
             </div>
-            <TodoItems entries={this.state.items}
+            
+            <Chart/>
+              <TodoItems entries={this.state.items}
                        delete={this.deleteItem}
                        edit={this.renameItem}
                        completed= {this.markCompleted}/>
           </div>
-
 
 
     );

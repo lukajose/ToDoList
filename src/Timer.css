@@ -1,5 +1,5 @@
 .timer-editor {
-    margin-left:30%;
+    margin-left:40%;
 }
 
 .timer-editor .text-timer {
@@ -9,7 +9,7 @@
 }
 
 .timer-editor table tr td input{
-  padding: 15px;
+  padding: 10px;
   font-size: 16px;
   border: #FFF;
   background-color: #FFF;
@@ -23,4 +23,5 @@
     margin-left:45%;
     font-size: 30px;
     font-family: consolas;
+    border-bottom-color: #00FA9A;
 }

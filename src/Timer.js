@@ -9,7 +9,8 @@ class Timer extends Component {
         this.state = {
             hours:1,
             minutes:0,
-            seconds:0
+            seconds:0,
+            TotalHours:0,
         }
         this.changeTimer = this.changeTimer.bind(this);
         this._inputHours= null;
@@ -20,37 +21,53 @@ class Timer extends Component {
     //Given any input from the input boxes transform seconds to minutes and minutes to hours
     transformTime() {
         let {hours, minutes,seconds} = this.state;
-        while (seconds > 60 || minutes > 60) {
-            if (seconds > 60) {
-                seconds -= 60;
-                // Convert string to int to calculate proper conversion
-                minutes = parseInt(minutes) + 1;
+        // Keep checking everytime updates occur
+        if (seconds > 60 || minutes > 60) { // avoid infinite loop 
+            while (seconds > 60 || minutes > 60) {
+                if (seconds > 60) {
+                    seconds -= 60;
+                    // Convert string to int to calculate proper conversion
+                    minutes = minutes + 1;
+                }
+                if (minutes > 60) {
+                    minutes -= 60;
+                    // same as above
+                    hours = hours+ 1;
+                }
             }
-            if (minutes > 60) {
-                minutes -= 60;
-                // same as above
-                hours = parseInt(this.state.hours) + 1;
-            }
+            this.setState({
+                        hours:hours,
+                        minutes:minutes,
+                        seconds:seconds
+                    });
+
         }
-        this.setState({
-                    hours:hours,
-                    minutes:minutes,
-                    seconds:seconds
-                });
+        
     }
 
     checkTimer() {
-        console.log('check timer: ',this.props.starter);
+        
         return this.props.starter;
     }
+
+    getHours(hours,minutes,seconds) {
+        const Hminutes = minutes/60;
+        const Hseconds = (seconds/60)/60;
+        hours += Hminutes + Hseconds;
+        // get all minutes and seconds in hours
+        return hours;
+    }
+
+    
 
 
 
     componentDidUpdate(prevProps) {
+
         
         if((prevProps.starter !== this.props.starter) && (this.checkTimer() === true)) {
-            //this.updateTime();
-            //this.transformTime();
+            const { hours,minutes, seconds } = this.state;
+            this.setState({TotalHours:this.getHours(hours,minutes,seconds)})
             this.myInterval = setInterval(
                 () => {
                 const { hours,minutes, seconds } = this.state;
@@ -58,17 +75,25 @@ class Timer extends Component {
                 // if seconds are greater than 0 keep decrementing
                 if (seconds > 0) {
                     this.setState(({ seconds }) => ({
+                        // keep decrementing seconds until seconds is 0.
                         seconds: seconds - 1
                     }))
                 }
                 // check if minutes still need to decrement
                 else {
-                    if (minutes == 0) {
-                        if(hours == 0) {
+                    if (minutes === 0) {
+                        if(hours === 0) {
                             clearInterval(this.myInterval);
+                            this.setState({
+                                hours:1,
+                                minutes:0,
+                                seconds:0,
+                            });
+                            // return the time back to edit mode. (change the boolean in parent node).
                             this.changeTimer();
                             
                         } else {
+                            // keep decrementing hours
                             this.setState(({hours}) => ({
                                 minutes:59,
                                 seconds:59,
@@ -77,6 +102,7 @@ class Timer extends Component {
 
                         }
                     } else {
+                        // keep decrementing minutes leave hours as it is.
                         this.setState(({ minutes }) => ({
                             minutes: minutes - 1,
                             seconds: 59
@@ -96,17 +122,17 @@ class Timer extends Component {
     updateTime() {
         if (this._inputHours !== null  && this._inputHours.value !== "" ) {
             //this.state.hours = this._inputHours.value;
-            this.setState({hours:this._inputHours.value});
+            this.setState({hours:parseInt(this._inputHours.value)});
         }        
 
         if(this._inputMinutes !== null && this._inputMinutes.value !== "" ){
             //this.state.minutes = this._inputMinutes.value; 
-            this.setState({minutes:this._inputMinutes.value});
+            this.setState({minutes:parseInt(this._inputMinutes.value)});
         }
                         
         if(this._inputSeconds !== null  && this._inputSeconds.value !== "" ){
             //this.state.seconds = this._inputSeconds.value;
-            this.setState({seconds:this._inputSeconds.value})
+            this.setState({seconds:parseInt(this._inputSeconds.value)});
         }
     }
 
@@ -115,7 +141,6 @@ class Timer extends Component {
     }
 
     timeFormat(time) {
-        time = parseInt(time)
         if(time < 10) {
             time = '0' + time;
         }
@@ -124,7 +149,7 @@ class Timer extends Component {
     
     render () {
         this.updateTime();
-        //this.transformTime();
+        this.transformTime();
         
         const hours = this.timeFormat(this.state.hours);
         const minutes = this.timeFormat(this.state.minutes);
