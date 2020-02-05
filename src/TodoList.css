@@ -69,7 +69,6 @@ padding:15px;
   padding: 20px;
   border-radius: 5px;
   width: 300px;
-  position: relative;
   font-family: consolas;
   border-left: 6px solid #00FA9A;
   overflow: hidden;
@@ -94,6 +93,7 @@ padding:15px;
 ul.theList {
   padding: 0;
   list-style: none;
+  float:left;
 }
 
 .todoListMain .BarChart {

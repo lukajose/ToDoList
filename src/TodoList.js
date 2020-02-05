@@ -162,7 +162,10 @@ class TodoList extends Component {
     return (<div className= "todoListMain">
               <Timer starter = {this.state.startTimer}
                       changeTimer = {()=>this.changeTimer()}
-                      currentKey={this.state.currentKey}/>
+                      currentKey={this.state.currentKey}
+                      addHours={(hours,key)=>this.addHours(hours,key)}
+                      currentKey={this.state.currentKey}
+              />
               <div className="input-box-todo">
                 <form onSubmit={this.addItem}>
                   <input
@@ -177,9 +180,8 @@ class TodoList extends Component {
             <div className = 'input-box-search'>
               <input placeholder="task to search .." onChange={this.searchItem}></input>
             </div>
-            
             <Chart/>
-              <TodoItems entries={this.state.items}
+            <TodoItems entries={this.state.items}
                        delete={this.deleteItem}
                        edit={this.renameItem}
                        completed= {this.markCompleted}/>

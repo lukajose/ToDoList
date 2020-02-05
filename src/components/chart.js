@@ -11,7 +11,7 @@ class Chart extends Component {
                 labels: ['T1','T2','T3','T4'],
                 datasets:[{
                     label:'Total Hours',
-                    data:[2,2,2,2],
+                    data:[2,4,3,1],
                     backgroundColor:'#ccffcc',
                 }],
             }
@@ -30,8 +30,22 @@ class Chart extends Component {
             <div className = "BarChart">
                 <Bar data={this.state.chartData} 
                     width={50}
-                    height={400}
-                    options={{ maintainAspectRatio: false }}
+                    height={30}
+                    options={
+                        {
+                            legend: {
+                              display: false
+                            },
+                            scales: {
+                              yAxes: [{
+                                ticks: {
+                                   beginAtZero:true,
+                                   stepSize:1,
+                                 }
+                               }]
+                              }
+                        }
+                    }
                 />
             </div>
         );
