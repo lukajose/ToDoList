@@ -13,6 +13,9 @@ class Timer extends Component {
             TotalHours:0,
         }
         this.changeTimer = this.changeTimer.bind(this);
+        this.UpdateTimeHours = this.UpdateTimeHours.bind(this);
+        this.UpdateTimeMinutes = this.UpdateTimeMinutes.bind(this);
+        this.UpdateTimeSeconds = this.UpdateTimeSeconds.bind(this);
         this._inputHours= null;
         this._inputMinutes = null;
         this._inputSeconds = null;
@@ -71,12 +74,10 @@ class Timer extends Component {
             const { hours,minutes, seconds } = this.state;
             // Store total hours completed before starting countdown
             const TotalHours = this.getHours(hours,minutes,seconds);
-            console.log(TotalHours);
             this.setState({TotalHours:TotalHours});
             this.myInterval = setInterval(
                 () => {
                 const { hours,minutes, seconds } = this.state;
-                //console.log('sec:',seconds,'minutes:',minutes,'hours:',hours);
                 // if seconds are greater than 0 keep decrementing
                 if (seconds > 0) { 
                     this.setState(({ seconds }) => ({
@@ -126,21 +127,34 @@ class Timer extends Component {
     }
 
 
-    updateTime() {
-        if (this._inputHours !== null  && this._inputHours.value !== "" ) {
-            //this.state.hours = this._inputHours.value;
-            this.setState({hours:parseInt(this._inputHours.value)});
+    
+
+    UpdateTimeHours(e) {
+        if ( (e.target.value !== "" )  && (!isNaN(e.target.value) ) ) {
+            // set new state
+            this.setState({hours:parseInt(e.target.value)});
+            this.transformTime();
         }        
 
-        if(this._inputMinutes !== null && this._inputMinutes.value !== "" ){
-            //this.state.minutes = this._inputMinutes.value; 
-            this.setState({minutes:parseInt(this._inputMinutes.value)});
-        }
-                        
-        if(this._inputSeconds !== null  && this._inputSeconds.value !== "" ){
-            //this.state.seconds = this._inputSeconds.value;
-            this.setState({seconds:parseInt(this._inputSeconds.value)});
-        }
+    }
+
+    UpdateTimeMinutes(e) {
+        console.log('e:',e.target.value);
+        if ( (e.target.value !== "" )  && (!isNaN(e.target.value) ) ) {
+            // set new state
+            this.setState({minutes:parseInt(e.target.value)});
+            this.transformTime();
+        }        
+
+    }
+
+    UpdateTimeSeconds(e) {
+        if ( (e.target.value !== "" )  && (!isNaN(e.target.value) ) ) {
+            // set new state
+            this.setState({seconds:parseInt(e.target.value)});
+            this.transformTime();
+        }        
+
     }
 
     changeTimer() {
@@ -155,8 +169,8 @@ class Timer extends Component {
     }
     
     render () {
-        this.updateTime();
-        this.transformTime();
+        //this.updateTime();
+        //this.transformTime();
         
         const hours = this.timeFormat(this.state.hours);
         const minutes = this.timeFormat(this.state.minutes);
@@ -177,20 +191,28 @@ class Timer extends Component {
                         <tr className="input-timer">
                                 <td>
                                     <input
-                                    ref={ (a) => this._inputHours = a} 
-                                    placeholder={hours}
+                                    //ref={ (a) => this._inputHours = a} 
+                                        placeholder={hours}
+                                        onChange={this.UpdateTimeHours}
                                     >
                                     </input>
                                 </td>
                                 <td>
                                     <input 
-                                        ref={ (a) => this._inputMinutes = a}
-                                        placeholder={minutes}></input>
+                                        //ref={ (a) => this._inputMinutes = a}
+                                        placeholder={minutes}
+                                        onChange={this.UpdateTimeMinutes}
+                                    >
+
+                                    </input>
                                 </td>
                                 <td>
                                     <input
-                                    ref= { (a) => this._inputSeconds = a}
-                                    placeholder={seconds}></input>
+                                    //ref= { (a) => this._inputSeconds = a}
+                                        placeholder={seconds}
+                                        onChange={this.UpdateTimeSeconds}
+                                    >
+                                    </input>
                                 </td>
                                 <td><AccessAlarmIcon/></td>
                             </tr>

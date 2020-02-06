@@ -3,11 +3,6 @@ import {Bar} from 'react-chartjs-2';
 //{Bar,Line,Pie}
 
 class Chart extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-
 
     render() {
         return (

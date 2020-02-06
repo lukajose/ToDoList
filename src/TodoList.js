@@ -156,7 +156,6 @@ class TodoList extends Component {
     const items = this.state.items;
     items.map(AddHours);
     this.setState({items:items});
-    console.log('items: ',items);
 
   }
 
