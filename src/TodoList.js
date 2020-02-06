@@ -16,7 +16,6 @@ class TodoList extends Component {
     this.searchItem = this.searchItem.bind(this);
     this.markCompleted = this.markCompleted.bind(this);
     this.changeTimer = this.changeTimer.bind(this);
-    //this.startTimer = false;
   }
 
   changeTimer() {
@@ -42,7 +41,7 @@ class TodoList extends Component {
       };
 
       
-      if(item.text !== "") { // avoid empty tasks
+      if(item.text !== "" && this.state.startTimer === false) { // avoid empty tasks
         
         //Update Search state
         var newS = this.state.search; // check if search is NOT empty to update state
@@ -70,20 +69,24 @@ class TodoList extends Component {
   }
   //filters items and returns everything except the item with that key
   deleteItem(key) {
-    //filter condition
-    function delete_filter(item) {
-      return (item.key !== key);
+    if(this.state.startTimer == false) {
+       //filter condition
+      function delete_filter(item) {
+        return (item.key !== key);
+      }
+      const filteredItems = this.state.items.filter(delete_filter);
+      var newS = this.state.search;
+      if(!this.isSearchEmpty(this.state.search)) {
+        newS = this.state.search.filter(delete_filter) // include to update state when searching
+      }
+      
+      this.setState({
+        items:filteredItems,
+        search:newS
+      })
+
     }
-    const filteredItems = this.state.items.filter(delete_filter);
-    var newS = this.state.search;
-    if(!this.isSearchEmpty(this.state.search)) {
-      newS = this.state.search.filter(delete_filter) // include to update state when searching
-    }
-    
-    this.setState({
-      items:filteredItems,
-      search:newS
-    })
+   
   }
   // when click prompt will ask for new message and rename that item
   renameItem(key) {
@@ -174,7 +177,7 @@ class TodoList extends Component {
       } 
       
     } else {
-        labels = new Array('Add Task to Start displaying your hours!');
+        labels = new Array('Add tasks to start displaying your hours!');
         data = [0];
       }
     
