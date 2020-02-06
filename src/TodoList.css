@@ -4,6 +4,29 @@
   padding:0;
 }
 
+.todoListMain .graph-type {
+  font-size: 16px;
+  font-family: consolas;
+  margin-left:30%;
+  margin-right: 30%;
+}
+
+.todoListMain .graph-type .dropdown-selector {
+  position:relative;
+  font-family: consolas;
+  
+
+}
+
+
+.todoListMain .graph-type .dropdown-selector selected {
+  display:none;
+}
+
+
+.todoListMain .graph-type .select-selected {
+  background-color: #32CD32;
+}
 
 
 .todoListMain .input-box-todo input {

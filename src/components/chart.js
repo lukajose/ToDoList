@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-import {Bar} from 'react-chartjs-2';
+import {Bar,Pie} from 'react-chartjs-2';
+import { positions } from "@material-ui/system";
 //{Bar,Line,Pie}
 
 class Chart extends Component {
@@ -23,7 +24,8 @@ class Chart extends Component {
                     options={
                         {
                             legend: {
-                              display: false
+                              display: true,
+                              labelString: 'Hours Today'
                             },
                             scales: {
                               yAxes: [{
@@ -32,7 +34,7 @@ class Chart extends Component {
                                    stepSize:1,
                                  }
                                }]
-                              }
+                            }
                         }
                     }
                 />

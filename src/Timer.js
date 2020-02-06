@@ -167,6 +167,12 @@ class Timer extends Component {
         }
         return time;
     }
+
+    //If cancel gets clicked change stop timer and delete last added item.
+    cancelItemCountdown() {
+        
+        this.changeTimer();
+    }
     
     render () {
         //this.updateTime();
@@ -224,8 +230,18 @@ class Timer extends Component {
             );
         } else { // display timer countdown
             
-            return ( 
-                    <p className="timer-countdown">{hours+ ':'+minutes + ':' + seconds} <AccessAlarmIcon/></p>
+            return (
+                    <div className='timer-countdown'>
+                        <p className="timer-countdown-text">{hours+ ':'+minutes + ':' + seconds} <AccessAlarmIcon/>
+                            <div>
+                                <form onSubmit={this.cancelItemCountdown}>
+                                    <button type="submit" className='cancel-button'>Cancel</button>
+                                </form>
+                            </div>
+                            
+                        </p>
+                        
+                    </div> 
             );
         }
     }

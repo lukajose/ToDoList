@@ -69,7 +69,7 @@ class TodoList extends Component {
   }
   //filters items and returns everything except the item with that key
   deleteItem(key) {
-    if(this.state.startTimer == false) {
+    if(this.state.startTimer === false) {
        //filter condition
       function delete_filter(item) {
         return (item.key !== key);
@@ -88,6 +88,25 @@ class TodoList extends Component {
     }
    
   }
+
+  cancelClock(key) {
+      //filter condition
+      function delete_filter(item) {
+        return (item.key !== key);
+      }
+      const filteredItems = this.state.items.filter(delete_filter);
+      var newS = this.state.search;
+      if(!this.isSearchEmpty(this.state.search)) {
+        newS = this.state.search.filter(delete_filter) // include to update state when searching
+      }
+      
+      this.setState({
+        items:filteredItems,
+        search:newS
+      })
+
+  }
+
   // when click prompt will ask for new message and rename that item
   renameItem(key) {
     var message = prompt("Rename to do task");
@@ -165,7 +184,6 @@ class TodoList extends Component {
   getCharData() {
     //get list of items
     const items = this.state.items;
-    console.log('items:',items,items.length);
     let labels,data;
     
     if(items.length > 0) {
@@ -195,11 +213,23 @@ class TodoList extends Component {
     return (<div className= "todoListMain">
               <Timer starter = {this.state.startTimer}
                       changeTimer = {()=>this.changeTimer()}
-                      currentKey={this.state.currentKey}
                       addHours={(hours,key)=>this.AddTaskHours(hours,key)}
                       current={this.state.currentKey}
+                      cancelItem={this.cancelClock}
 
               />
+              <div className="graph-type">
+                <form>
+                    <legend>Graph type</legend>
+                      <p>
+                        <select id= "myList" className ="dropdown-selector">
+                          <option value='bar'>Bar Chart</option>
+                          <option value='line'>Line Chart</option>
+                          <option value='pie'>Pie Chart</option>
+                        </select>
+                      </p>
+                </form>
+              </div>
               <div className="input-box-todo">
                 <form onSubmit={this.addItem}>
                   <input
