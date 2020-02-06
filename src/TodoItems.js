@@ -16,11 +16,6 @@ class TodoItems extends Component {
 
 
 
-
-  /* Item <div>
-                 <img className= "Tomatoe" src="logo512.png" width="20" height="20" key= {item.key+5} alt=''></img> 
-              </div>
-  */
   createTasks(item){
     return (<li style={this.getStyle(item)}>
               {item.text}
