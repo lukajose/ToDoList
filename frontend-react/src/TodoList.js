@@ -69,7 +69,7 @@ class TodoList extends Component {
   }
   //filters items and returns everything except the item with that key
   deleteItem(key) {
-    if(this.state.startTimer == false) {
+    if(this.state.startTimer === false) {
        //filter condition
       function delete_filter(item) {
         return (item.key !== key);
