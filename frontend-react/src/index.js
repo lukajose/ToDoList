@@ -9,7 +9,7 @@ import RegisterPage from './pages/Register';
 var destination = document.querySelector('#container')
 ReactDOM.render(
   <div>
-  <RegisterPage/>
+  <Login/>
   </div>,
   destination);
 

@@ -97,7 +97,7 @@ function LoginPage({setAuth, ...props }) {
             id="password"
             autoComplete="current-password"
           />
-          <Button type="submit" fullWidth variant="contained" color="primary">
+          <Button type="submit" fullWidth variant="contained" color="primary" style={{backgroundColor:"#00b36e"}}>
             Sign In
           </Button>
           </ThemeProvider>
