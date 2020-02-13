@@ -1,9 +1,10 @@
 import React from 'react';
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 import RegisterPage from './pages/Register';
-import Login from './pages/Login';
+import LoginPage from './pages/Login';
 import axios from 'axios';
-import AuthProvider from './AuthContext';
+import {AuthProvider} from './AuthContext';
+import ProtectedRoute from './components/protectedRoute';
 
 
 function App () {
@@ -18,14 +19,14 @@ function App () {
     }
 
     return (
-        <AuthProvider value={authDetails}>
+        <AuthProvider value={setAuth}>
             <Router>
                 <Switch>
                     <Route
                     exact
                     path="/login"
                     render={(props)=>{
-                        return <Login {...props} setAuth={setAuth}/>;
+                        return <LoginPage {...props} setAuth={setAuth}/>;
                     }}
                     />
                     <Route
