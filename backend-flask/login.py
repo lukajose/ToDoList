@@ -59,7 +59,7 @@ class Login():
             db.close()
         else:
             db.close()
-            raise ValueError
+            print('nothing yet!')
             
 
         

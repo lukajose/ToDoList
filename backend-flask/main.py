@@ -1,22 +1,23 @@
 import flask as f
 import psycopg2 as pg
 from json import dumps
-from login import Register,Login
 
-app = f.Flask('__main__')
+
+app = f.Flask(__name__, static_folder='../frontend-react/build/static',
+            template_folder='../frontend-react/build')
 
 @app.route('/')
-def myIndex():
-    
-    return f.render_template("index.html",token="Hello Flask + React!")
+def myIndex():   
+    return f.render_template("index.html")
 
 @app.route('/auth/login', methods=['POST'])
 def post_login():
     username = f.request.form.get('email')
     password = f.request.form.get('password')
-    user_logged_in = Login(username,password)
+    return dumps({'u_id':username,'token':password})
 
 
+"""
 
 
     return dumps(login.auth_login(username, password))
@@ -53,6 +54,6 @@ def post_auth_passwordreset_reset():
     reset_code = f.request.form.get('reset_code') 
     new_password = f.request.form.get('new_password')
     return dumps(login.auth_passwordreset_reset(reset_code, new_password))
-
+"""
 if __name__ == "__main__":
     app.run(debug=True)    
