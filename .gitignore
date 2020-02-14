@@ -1,7 +1,11 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+<<<<<<< HEAD
 frontend-react/node_modules
+=======
+/frontend-react/node_modules
+>>>>>>> server
 /.pnp
 .pnp.js
 
@@ -21,3 +25,6 @@ frontend-react/node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+#ignore credentials
+/backend-flask/credentials.py

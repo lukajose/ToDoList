@@ -52,8 +52,7 @@ function LoginPage({setAuth, ...props }) {
       .then((response) => {
         console.log(response);
         const data = response.data;
-        // change this when server works
-        setAuth('askdmasdlkamsdl123124@#', '1');
+        setAuth(data.token, data.u_id);
         props.history.push('/');
       })
       .catch((err) => {});
