@@ -59,6 +59,7 @@ function RegisterPage({SetAuth, ... props}) {
         if(!values.email || !values.password) return;
 
         // send data to backend
+        console.log(values);
         axios.post('auth/register', {... values})
             .then((response) => {
                 console.log(response);

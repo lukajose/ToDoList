@@ -5,6 +5,7 @@ import LoginPage from './pages/Login';
 import axios from 'axios';
 import {AuthProvider} from './AuthContext';
 import ProtectedRoute from './components/protectedRoute';
+import DashBoard from './pages/DashBoard';
 
 
 function App () {
@@ -36,6 +37,7 @@ function App () {
                         return <RegisterPage {...props} setAuth={setAuth}/>;
                     }}
                     />
+                    <ProtectedRoute exact path="/" component={DashBoard}/>
                 </Switch>
             </Router>
         </AuthProvider>
