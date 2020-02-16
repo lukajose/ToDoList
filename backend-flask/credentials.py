@@ -1,4 +1,3 @@
-
 secret = 'TokenisDragonAtom'
 db_app = 'productivity_app'
 user_app = "postgres"

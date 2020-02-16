@@ -2,7 +2,6 @@ import React from 'react';
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 import RegisterPage from './pages/Register';
 import LoginPage from './pages/Login';
-import axios from 'axios';
 import {AuthProvider} from './AuthContext';
 import ProtectedRoute from './components/protectedRoute';
 import DashBoard from './pages/DashBoard';

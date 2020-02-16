@@ -15,6 +15,7 @@ import {
 import BlurLinearIcon from '@material-ui/icons/BlurLinear';
 import React from 'react';
 import { green } from '@material-ui/core/colors';
+const qs = require('qs')
 
 const useStyles = makeStyles((theme)=> ({
         '@global': {
@@ -57,10 +58,9 @@ function RegisterPage({SetAuth, ... props}) {
 
         //quick check
         if(!values.email || !values.password) return;
-
+        console.log('values:',{...values})
         // send data to backend
-        console.log(values);
-        axios.post('auth/register', {... values})
+        axios.post('/auth/register', qs.stringify({... values}))
             .then((response) => {
                 console.log(response);
                 const data = response.data;
@@ -68,7 +68,7 @@ function RegisterPage({SetAuth, ... props}) {
                 props.history.push('/');
             })
             //in case of error
-            .catch((err)=> {});
+            .catch((err)=> {console.log('error register',err)});
 
     }
 

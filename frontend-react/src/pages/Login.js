@@ -15,6 +15,8 @@ import {
 import React from 'react';
 import BlurCircularIcon from '@material-ui/icons/BlurCircular';
 import { green } from '@material-ui/core/colors';
+const qs = require('qs');
+
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -48,15 +50,15 @@ function LoginPage({setAuth, ...props }) {
     if (!email || !password) return;
 
     // Send to backend
-    axios.post('/auth/login', { email, password })
+    axios.post('/auth/login', qs.stringify({ email, password }))
       .then((response) => {
-        console.log(response);
+        console.log('response:',response);
         const data = response.data;
         // change this when server works
-        setAuth('askdmasdlkamsdl123124@#', '1');
+        setAuth(data.token, data.u_id);
         props.history.push('/');
       })
-      .catch((err) => {});
+      .catch((err) => {console.log('error happened',err)});
   }
 
   const classes = useStyles();
@@ -74,7 +76,7 @@ function LoginPage({setAuth, ...props }) {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        <form noValidate onSubmit={handleSubmit}>
+        <form  onSubmit={handleSubmit}>
           <ThemeProvider theme={theme}>
           <TextField
             variant="outlined"
