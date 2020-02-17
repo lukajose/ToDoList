@@ -2,7 +2,7 @@ import React from 'react';
 import {Route, Redirect} from 'react-router-dom';
 import AuthContext from '../AuthContext';
 
-function ProtectedRout(props) {
+function ProtectedRoute(props) {
     const token = React.useContext(AuthContext);
     console.log('token:',token);
     // if token doesnt exist then do not allowed access and redirect to login
@@ -12,4 +12,4 @@ function ProtectedRout(props) {
         return <Route {...props}/>;
 }
 
-export default ProtectedRout;
+export default ProtectedRoute;

@@ -12,10 +12,13 @@ import {
   Typography,
   createMuiTheme,
 } from '@material-ui/core';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 import React from 'react';
 import BlurCircularIcon from '@material-ui/icons/BlurCircular';
 import { green } from '@material-ui/core/colors';
 const qs = require('qs');
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -39,9 +42,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function LoginPage({setAuth, ...props }) {
+  
   function handleSubmit(event) {
     event.preventDefault();
-
+    toast.configure();
     // Get user inputs (TODO:)
     const email = event.target[0].value;
     const password = event.target[2].value;
@@ -49,6 +53,16 @@ function LoginPage({setAuth, ...props }) {
     // Quick validation
     if (!email || !password) return;
 
+    const ErrorHandler = (error) => {
+      toast.error('Invalid loggin!',{position:toast.POSITION.TOP_CENTER});
+      return Promise.reject({...error});
+    }
+    const responseHandler = (response) => {
+      return response;
+    }
+
+    axios.interceptors.response.use(responseHandler,ErrorHandler);
+    
     // Send to backend
     axios.post('/auth/login', qs.stringify({ email, password }))
       .then((response) => {
@@ -58,7 +72,8 @@ function LoginPage({setAuth, ...props }) {
         setAuth(data.token, data.u_id);
         props.history.push('/');
       })
-      .catch((err) => {console.log('error happened',err)});
+      .catch((err) => {
+      });
   }
 
   const classes = useStyles();

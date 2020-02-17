@@ -19,7 +19,7 @@ function App () {
     }
 
     return (
-        <AuthProvider value={setAuth}>
+        <AuthProvider value={authDetails}>
             <Router>
                 <Switch>
                     <Route
