@@ -9,8 +9,6 @@ from validate import validate_register
 app = f.Flask(__name__)
 
 
-
-
 def defaultHandler(err):
     response = err.get_response()
     response.data = dumps({
@@ -20,6 +18,7 @@ def defaultHandler(err):
     })
     response.content_type = 'application/json'
     return response
+app.config['TRAP_HTTP_EXCEPTIONS'] = True
 app.register_error_handler(LoginErrorHttp,defaultHandler)
 app.register_error_handler(RegisterErrorHttp,defaultHandler)
 app.register_error_handler(ValueErrorHttp,defaultHandler)

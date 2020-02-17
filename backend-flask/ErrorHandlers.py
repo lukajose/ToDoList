@@ -9,7 +9,7 @@ class LoginErrorHttp(HTTPException):
 class RegisterErrorHttp(HTTPException):
     code = 401
     description = "Email registered, forgot password?"
-app.config['TRAP_HTTP_EXCEPTIONS'] = True
+
 
 class ValueErrorHttp(HTTPException):
     code = 400

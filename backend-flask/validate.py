@@ -2,11 +2,7 @@ import re
 from ErrorHandlers import ValueErrorHttp
 
 def validate_email(email):
-    regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
-    if(re.search(regex,email)):
-        return True
-    else:
-        raise ValueErrorHttp(description="invalid email please try again")
+    return True
 
 def validate_names(name_first,name_last):
     if(len(name_first) < 2  or (name_last) < 2):
@@ -36,16 +32,9 @@ def validate_password(password):
 
 
 
-
-
 """ given register input validate data """
 def validate_register(name_first,name_last,email,password):
     validate_email(email)
     validate_names(name_first,name_last)
     validate_password(password)
     return True
-    
-
-
-    else:
-        raise ValueErrorHttp
