@@ -1,37 +1,35 @@
 import flask as f
 from json import dumps
 from database import DBElephant
-import datetime as dt
-from werkzeug.exceptions import HTTPException
-
+from flask_cors import CORS
+import re
+from ErrorHandlers import LoginErrorHttp, RegisterErrorHttp, ValueErrorHttp
+from validate import validate_register
 
 app = f.Flask(__name__)
 
 
-class ValueErrorHttp(HTTPException):
-    """ Error class for invalid values """
-    code = 400
-    message = "Invalid input value"
-app.config['TRAP_HTTP_EXCEPTIONS'] = True
+
 
 def defaultHandler(err):
     response = err.get_response()
     response.data = dumps({
         "code": err.code,
         "name": "System error",
-        "message": err.get_description(),
+        "message": re.sub('<[^<]+?>', '', err.get_description() ) , #removing html tags if any from message
     })
     response.content_type = 'application/json'
     return response
+app.register_error_handler(LoginErrorHttp,defaultHandler)
+app.register_error_handler(RegisterErrorHttp,defaultHandler)
 app.register_error_handler(ValueErrorHttp,defaultHandler)
-
+CORS(app)
 
 @app.route('/auth/login', methods=['POST'])
 def post_login():
     email = f.request.form.get('email')
     password = f.request.form.get('password')
     db = DBElephant()
-    print(email)
     db.query("""select u_id,hash_password from users where email like '{}';""".format(email))
     u_id,password_db = db.fetch_one()
     db.close()
@@ -40,7 +38,7 @@ def post_login():
         print('passwords match cool! pw:', password,' pdb:',password_db)
         return dumps({'u_id':u_id,'token': 'allgoodvalidtoken'})
     else:
-        raise ValueErrorHttp
+        raise LoginErrorHttp
     
     
 @app.route('/auth/register', methods=['POST'])
@@ -50,22 +48,21 @@ def post_register():
     password = f.request.form.get('password')
     name_first = f.request.form.get('name_first')
     name_last = f.request.form.get('name_last')
-    day_registered  = dt.datetime.now()
-    #Get day today
-    str_day = day_registered.strftime("%Y-%m-%d")
+    
+    #validate data
+    validate_register(name_first,name_last,email,password)
+
     #open database connection
     db = DBElephant()
-    #look for existing user
-    db.query("""select u_id from users where email like 'lukajosegamulin@outlook.com';""")
-    u_id, = db.fetch_one()
-    if(u_id):
-        return dumps({'u_id':u_id,'token':'already registered!'})
+
+    #check user exists if exists raise error
+    if(db.user_in_db(email)):
+        raise RegisterErrorHttp
+
     else:
-        print('enters !')
-        db.query("""insert into Users values (1,'{}','{}','{}','{}',ARRAY['token1'],1,'{}')""".format(name_first,name_last,email,password,str_day))
-        print(f"email:{email},password:{password},name_first:{name_first},name_last:{name_last}")
+        u_id, token = db.register_user(name_first,name_last,email,password)
         db.close_commit()
-        return dumps({'u_id':'done!','token': 'check db'})
+        return dumps({'u_id':u_id,'token': token})
 """
 
 

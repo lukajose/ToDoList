@@ -5,6 +5,7 @@ import LoginPage from './pages/Login';
 import {AuthProvider} from './AuthContext';
 import ProtectedRoute from './components/protectedRoute';
 import DashBoard from './pages/DashBoard';
+import './axios';
 
 
 function App () {
