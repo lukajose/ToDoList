@@ -29,15 +29,14 @@ def post_login():
     email = f.request.form.get('email')
     password = f.request.form.get('password')
     db = DBElephant()
-    db.query("""select u_id,hash_password from users where email like '{}';""".format(email))
-    u_id,password_db = db.fetch_one()
-    db.close()
-    #check if passwords match if they do give token
-    if(password == password_db):
-        print('passwords match cool! pw:', password,' pdb:',password_db)
-        return dumps({'u_id':u_id,'token': 'allgoodvalidtoken'})
+    user_data = db.login_user(email,password)
+    db.close_commit()
+    print('user data:',user_data)
+    if (user_data):
+        u_id, token = user_data
+        return dumps({'u_id':u_id,'token': token})
     else:
-        raise LoginErrorHttp
+        raise LoginErrorHttp(description= "Invalid user or password")
     
     
 @app.route('/auth/register', methods=['POST'])
@@ -47,7 +46,7 @@ def post_register():
     password = f.request.form.get('password')
     name_first = f.request.form.get('name_first')
     name_last = f.request.form.get('name_last')
-    print(f'email:{email},password:{password}, name_f:{name_first}, name_l:{name_last}')
+    
     #validate data
     validate_register(name_first,name_last,email,password)
 

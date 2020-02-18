@@ -2,12 +2,12 @@ import re
 from ErrorHandlers import ValueErrorHttp
 
 def validate_email(email):
-    
+    print('yes enters validation')
     regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
     if(re.search(regex,email)):
         return True
     else: 
-        return False
+        raise ValueErrorHttp(description="Invalid email address")
 
 def validate_names(name_first,name_last):
     if(len(name_first) < 2  or len(name_last) < 2):

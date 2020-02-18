@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme)=> ({
 
 
 
-function RegisterPage({SetAuth, ... props}) {
+function RegisterPage({setAuth, ... props}) {
     // use current input
     const [values,setValues] = React.useState({
         name_first: '',
@@ -64,7 +64,7 @@ function RegisterPage({SetAuth, ... props}) {
             .then((response) => {
                 console.log(response);
                 const data = response.data;
-                SetAuth(data.token,data.u_id);
+                setAuth(data.token,data.u_id);
                 props.history.push('/');
             })
             //in case of error

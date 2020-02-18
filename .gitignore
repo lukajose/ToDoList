@@ -8,6 +8,8 @@ frontend-react/node_modules
 # testing
 /coverage
 
+#ignore credentials
+/backend-flask/credentials.py
 # production
 /build
 
