@@ -47,7 +47,7 @@ def post_register():
     password = f.request.form.get('password')
     name_first = f.request.form.get('name_first')
     name_last = f.request.form.get('name_last')
-    
+    print(f'email:{email},password:{password}, name_f:{name_first}, name_l:{name_last}')
     #validate data
     validate_register(name_first,name_last,email,password)
 

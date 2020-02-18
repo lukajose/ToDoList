@@ -2,10 +2,15 @@ import re
 from ErrorHandlers import ValueErrorHttp
 
 def validate_email(email):
-    return True
+    
+    regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+    if(re.search(regex,email)):
+        return True
+    else: 
+        return False
 
 def validate_names(name_first,name_last):
-    if(len(name_first) < 2  or (name_last) < 2):
+    if(len(name_first) < 2  or len(name_last) < 2):
         raise ValueErrorHttp(description="first and last name should be greater than 2")
     #only letters should be allowed in names
     if(not name_first.isalpha() or not name_last.isalpha()):
@@ -13,7 +18,7 @@ def validate_names(name_first,name_last):
 
 
 def validate_password(password):
-    if len(password) < 5 and len(password) < 15:
+    if len(password) < 5 or len(password) > 15:
         raise ValueErrorHttp(description='password must be at least length 5+ and less than 15')
     else:
         #check it contains upper case, a number and a sign

@@ -15,7 +15,7 @@ import {
 import BlurLinearIcon from '@material-ui/icons/BlurLinear';
 import React from 'react';
 import { green } from '@material-ui/core/colors';
-const qs = require('qs')
+import '../axios'
 
 const useStyles = makeStyles((theme)=> ({
         '@global': {
@@ -60,7 +60,7 @@ function RegisterPage({SetAuth, ... props}) {
         if(!values.email || !values.password) return;
         console.log('values:',{...values})
         // send data to backend
-        axios.post('/auth/register', qs.stringify({... values}))
+        axios.post('/auth/register', {... values})
             .then((response) => {
                 console.log(response);
                 const data = response.data;

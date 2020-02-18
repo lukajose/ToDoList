@@ -7,7 +7,7 @@ create table if not exists Users(
     first_name varchar(50),
     last_name varchar(50),
     email varchar(100),
-    hash_password varchar(50),
+    hash_password text,
     tokens text[],
     perm_type integer,
     time_registered  date,

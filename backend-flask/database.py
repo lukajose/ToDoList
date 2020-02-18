@@ -28,7 +28,8 @@ class DBElephant():
     """ Given an open connection returns true if user in db"""
     def user_in_db(self,email):
         self.query("""select u_id from users where email like '{}';""".format(email))
-        u_id , = self.fetch_one()
+        u_id = self.fetch_one()
+        print('uid:',u_id)
         if(u_id):
             return True
         else:
@@ -60,10 +61,10 @@ class DBElephant():
         #get permission
         permission_type = 1 #will change for further implementation in the future
         #get user id
-        u_id = self.get_user_count()
+        u_id = self.get_user_count() + 1
         self.query("""insert into Users values ({},'{}','{}','{}','{}',ARRAY['{}'],{},'{}')"""
             .format(u_id,name_first,name_last,email,password,jwt_token,permission_type,str_day))
-        
+        print(u_id,name_first,name_last,email,password,jwt_token,permission_type,str_day)
         return (u_id,jwt_token)
     def close(self):
             self.cur.close()

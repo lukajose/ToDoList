@@ -15,7 +15,7 @@ import {
 import React from 'react';
 import BlurCircularIcon from '@material-ui/icons/BlurCircular';
 import { green } from '@material-ui/core/colors';
-
+import '../axios';
 
 
 
@@ -52,7 +52,7 @@ function LoginPage({setAuth, ...props }) {
     if (!email || !password) return;
     
     // Send to backend
-    axios.post('/auth/login', { email, password })
+    axios.post('/auth/login',{ email, password })
       .then((response) => {
         console.log('response:',response);
         const data = response.data;
