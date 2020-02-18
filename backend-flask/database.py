@@ -30,7 +30,6 @@ class DBElephant():
     def user_in_db(self,email):
         self.query("""select u_id from users where email like '{}';""".format(email))
         u_id = self.fetch_one()
-        print('uid:',u_id)
         if(u_id):
             return True
         else:
