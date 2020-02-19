@@ -1,2 +1,1 @@
-node: cd frontend-react && npm install && npm start
 python: cd backend-flask && pip install -r requirements.txt && gunicorn app:app -b 0.0.0.0:5000
