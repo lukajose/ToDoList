@@ -1,13 +1,16 @@
 import psycopg2 as pg
-from credentials import secret,db_app,db_password,user_app
 import datetime as dt
 import hashlib
 import time
 import jwt
+import os
+
+
+DATABASE_URL = os.environ['DATABASE_URL']
 
 class DBElephant():
-    def __init__(self,db = db_app,user = user_app,password= db_password):
-        self.conn = pg.connect(database=db, user=user,password=password)
+    def __init__(self,db = DATABASE_URL):
+        self.conn = pg.connect(db,sslmode='require')
         self.cur = self.conn.cursor()
     def query(self, query):
         try:
