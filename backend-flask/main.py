@@ -61,6 +61,26 @@ def post_register():
         u_id, token = db.register_user(name_first,name_last,email,password)
         db.close_commit()
         return dumps({'u_id':u_id,'token': token})
+
+
+@app.route('/task/completed', methods=['POST'])
+def post_task():
+    token = f.request.form.get('token')
+    task = f.request.form.get('task')
+    hours = f.request.form.get('hours')
+    validate_task(task,hours) #TODO: create a data validification function for task and hours
+    db = DBElephant()
+
+    u_id = db.token_in_db(token) #TODO: create db method to authentificate a user given a token returns a valid user number if any
+    
+    if(u_id):
+        db.insert_task(task,hours):
+        db.close_commit()
+    else:
+        raise ValueErrorHttp(description='Invalid token given')
+
+    
+
 """
 
 

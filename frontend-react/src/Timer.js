@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import "./Timer.css"
 import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
+import axios from 'axios';
+import './axios';
 
 
 class Timer extends Component {
@@ -97,6 +99,9 @@ class Timer extends Component {
                             });
                             //update hours in item
                             this.props.addHours(this.state.TotalHours,this.props.current);
+                            // insert into db task and hours taken
+                            axios.post('/task/completed',{task:,hours:})
+
                             // return the time back to edit mode. (change the boolean in parent node).
                             this.changeTimer();
                             

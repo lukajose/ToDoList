@@ -93,7 +93,25 @@ class DBElephant():
         else:
             #user does not exist
             return False
-            
+    
+    
+    """Assume open connection, given a token search in db if user contains token
+    returns user id that holds the token """
+    def token_in_db(self,token):
+        self.query("""select u_id from userssessions where token = '{}' """.format(token))
+        u_id = self.fetch_one()[0]
+        if(u_id):
+            #a user id with this token exists
+            return u_id
+        else:
+            return False
+
+    def insert_task(self,u_id,task,hours):
+        self.query("""select task_id from tasks order by task_id desc limit 1""")
+        task_id = self.fetch_one()[0] + 1
+        self.query("""insert into tasks values({},{},'{}',{},current_timestamp) """.format(task_id,u_id,task,hours))
+        
+
 
     def close(self):
             self.cur.close()
