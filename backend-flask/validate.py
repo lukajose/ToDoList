@@ -43,3 +43,4 @@ def validate_register(name_first,name_last,email,password):
     validate_names(name_first,name_last)
     validate_password(password)
     return True
+
