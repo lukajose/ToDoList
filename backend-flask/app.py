@@ -24,6 +24,12 @@ app.register_error_handler(RegisterErrorHttp,defaultHandler)
 app.register_error_handler(ValueErrorHttp,defaultHandler)
 CORS(app)
 
+@app.route('/')
+def main():
+    return '<h1> Server is up and running </h1>'
+
+
+
 @app.route('/auth/login', methods=['POST'])
 def post_login():
     email = f.request.form.get('email')
