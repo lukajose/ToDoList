@@ -1,1 +1,1 @@
-web: honcho -f ProcfileHoncho start
+web: cd backend-flask && gunicorn app:app
