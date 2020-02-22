@@ -1,1 +1,1 @@
-web: cd frontend-react && npm start
+web: cd frontend-react  && yarn build && npm install -g serve && serve -s build
