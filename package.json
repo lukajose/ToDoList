@@ -23,7 +23,7 @@
       "serve":"^11.3.0"
     },
     "scripts": {
-      "start": "cd frontend-react && serve -s build",
+      "start": "npm install -g serve ; PORT=8080 serve -s build",
       "build": "cd frontend-react && npm run build",
       "install-client": "cd frontend-react && npm install",
       "heroku-postbuild":"npm run install-client && npm run build"
